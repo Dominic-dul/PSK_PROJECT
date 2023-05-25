@@ -17,3 +17,9 @@
 2023-05-25 20:11:34.488 [http-nio-9999-exec-8] INFO  c.p.e.i.LoggingInterceptor - Method 'GET' called for path '/e-shop/product/1'
 2023-05-25 20:11:34.512 [http-nio-9999-exec-8] INFO  c.p.e.i.LoggingInterceptor - Response status: 200
 2023-05-25 20:11:34.513 [http-nio-9999-exec-8] INFO  c.p.e.i.LoggingInterceptor - Request completed for path: /e-shop/product/1
+2023-05-25 20:49:03.287 [http-nio-9999-exec-4] INFO  c.p.e.i.LoggingInterceptor - Method 'GET' called for path '/e-shop/product/1'
+2023-05-25 20:49:03.427 [http-nio-9999-exec-4] INFO  c.p.e.i.LoggingInterceptor - Response status: 200
+2023-05-25 20:49:03.428 [http-nio-9999-exec-4] INFO  c.p.e.i.LoggingInterceptor - Request completed for path: /e-shop/product/1
+2023-05-25 20:49:14.573 [http-nio-9999-exec-2] INFO  c.p.e.i.LoggingInterceptor - Method 'GET' called for path '/e-shop/product/1'
+2023-05-25 20:49:14.580 [http-nio-9999-exec-2] INFO  c.p.e.i.LoggingInterceptor - Response status: 200
+2023-05-25 20:49:14.580 [http-nio-9999-exec-2] INFO  c.p.e.i.LoggingInterceptor - Request completed for path: /e-shop/product/1

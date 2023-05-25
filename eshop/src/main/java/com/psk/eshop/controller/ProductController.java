@@ -39,12 +39,7 @@ public class ProductController {
 
     @PutMapping("/product/{productId}")
     public Product update(@PathVariable Long productId, @RequestParam String productRequest, @RequestParam MultipartFile file) throws JsonProcessingException {
-        Product existingProduct = productService.getProductById(productId);
         ProductRequestDTO product = new ObjectMapper().readValue(productRequest, ProductRequestDTO.class);
-        if (!existingProduct.getVersion().equals(product.getVersion())){
-            throw  new ResponseStatusException(HttpStatus.CONFLICT, "The resource has been modified concurrently. Please refresh and try again.");
-        }
-
         return productService.updateProduct(productId, product, file);
     }
 

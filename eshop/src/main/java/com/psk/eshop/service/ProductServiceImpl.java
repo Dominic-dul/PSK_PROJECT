@@ -7,6 +7,7 @@ import com.psk.eshop.enums.OrderStatus;
 import com.psk.eshop.model.Order;
 import com.psk.eshop.model.Product;
 import com.psk.eshop.repository.ProductRepository;
+import jakarta.persistence.OptimisticLockException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -62,7 +63,11 @@ public class ProductServiceImpl implements ProductService{
                     product.setDescription(productRequest.getDescription());
                     product.setPicturePath(getCloudinaryPicture(file));
                     product.setQuantity(productRequest.getQuantity());
-                    return productRepository.save(product);
+                    try {
+                        return productRepository.save(product);
+                    } catch (OptimisticLockException ex){
+                        throw new ResponseStatusException(HttpStatus.CONFLICT, "Entity was updated by another user. Try again");
+                    }
                 })
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Product with id %d not found", productId))
