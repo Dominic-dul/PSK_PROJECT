@@ -25,11 +25,13 @@ public class ProductRequestDTO {
     @JsonCreator
     public ProductRequestDTO(@JsonProperty("userEmail") String userEmail, @JsonProperty("discountId") Long discountId,
                              @JsonProperty("price") BigDecimal price, @JsonProperty("name") String name,
-                             @JsonProperty("description") String description, @JsonProperty Long quantity) {
+                             @JsonProperty("description") String description, @JsonProperty Long quantity,
+    @JsonProperty("version") Long version) {
         this.userEmail = userEmail;
         this.discountId = discountId;
         this.price = price;
         this.name = name;
         this.description = description;
+        this.version = version;
     }
 }
