@@ -9,7 +9,6 @@ import com.psk.eshop.model.Product;
 import com.psk.eshop.repository.ProductRepository;
 import jakarta.persistence.OptimisticLockException;
 import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +18,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-@Primary
 @Service
 @AllArgsConstructor
 public class ProductServiceImpl implements ProductService{
