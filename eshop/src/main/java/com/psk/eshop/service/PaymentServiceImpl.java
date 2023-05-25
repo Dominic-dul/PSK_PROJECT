@@ -3,6 +3,7 @@ package com.psk.eshop.service;
 import com.psk.eshop.dto.PaymentRequestDTO;
 import com.psk.eshop.model.Payment;
 import com.psk.eshop.repository.PaymentRepository;
+import jakarta.persistence.OptimisticLockException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,11 @@ public class PaymentServiceImpl implements PaymentService{
                     payment.setBillingAddress(paymentRequest.getBillingAddress());
                     payment.setTransactionDate(paymentRequest.getTransactionDate());
                     payment.setTransactionState(paymentRequest.getTransactionState());
-                    return paymentRepository.save(payment);
+                    try {
+                        return paymentRepository.save(payment);
+                    } catch (OptimisticLockException ex) {
+                        throw new ResponseStatusException(HttpStatus.CONFLICT, "Entity was updated by another user. Try again");
+                    }
                 })
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Payment with id %d not found", paymentId))

@@ -3,6 +3,7 @@ package com.psk.eshop.service;
 import com.psk.eshop.dto.StatisticRequestDTO;
 import com.psk.eshop.model.Statistic;
 import com.psk.eshop.repository.StatisticRepository;
+import jakarta.persistence.OptimisticLockException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -31,11 +32,15 @@ public class StatisticServiceImpl implements StatisticService{
                     statistic.setOrderId(statisticRequest.getOrderId());
                     statistic.setCreatedDate(statisticRequest.getCreatedDate());
                     statistic.setDescription(statisticRequest.getDescription());
-                    return statisticRepository.save(statistic);
-                })
-                .orElseThrow(
+                    try {
+                        return statisticRepository.save(statistic);
+                    } catch (OptimisticLockException ex) {
+                        throw new ResponseStatusException(HttpStatus.CONFLICT, "Entity was updated by another user. Try again");
+                    }
+                }).orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Statistic with id %d not found", statisticId))
                 );
+
     }
     @Override
     public void deleteStatisticById(Long statisticId)

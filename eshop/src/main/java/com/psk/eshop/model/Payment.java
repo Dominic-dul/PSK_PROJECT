@@ -26,4 +26,6 @@ public class Payment {
     private Timestamp transactionDate;
     private TransactionState transactionState;
     private String billingAddress;
+    @Version
+    private Long version;
 }

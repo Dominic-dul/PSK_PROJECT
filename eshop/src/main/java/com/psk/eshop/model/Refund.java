@@ -26,4 +26,6 @@ public class Refund {
     private RefundStatus refundStatus;
     private Timestamp createdDate;
     private String description;
+    @Version
+    private Long version;
 }

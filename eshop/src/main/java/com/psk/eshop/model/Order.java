@@ -47,4 +47,6 @@ public class Order {
             )
     )
     private List<Product> products = new ArrayList<>();
+    @Version
+    private Long version;
 }

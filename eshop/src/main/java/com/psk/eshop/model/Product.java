@@ -33,4 +33,6 @@ public class Product {
     private String picturePath;
     private Long quantity;
     private Timestamp dateReceived;
+    @Version
+    private Long version;
 }

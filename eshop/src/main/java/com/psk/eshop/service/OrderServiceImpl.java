@@ -5,6 +5,7 @@ import com.psk.eshop.dto.OrderRequestDTO;
 import com.psk.eshop.model.Order;
 import com.psk.eshop.model.Product;
 import com.psk.eshop.repository.OrderRepository;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -57,7 +58,11 @@ public class OrderServiceImpl implements OrderService{
                     order.setOrderStatus(orderRequest.getOrderStatus());
                     order.setPrice(products.stream().map(Product::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add));
                     order.setShippingAddress(orderRequest.getShippingAddress());
-                    return orderRepository.save(order);
+                    try {
+                        return orderRepository.save(order);
+                    } catch (OptimisticLockException ex) {
+                        throw new ResponseStatusException(HttpStatus.CONFLICT, "Entity was updated by another user. Try again");
+                    }
                 })
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Order with id %d not found", orderId))

@@ -3,6 +3,7 @@ package com.psk.eshop.service;
 import com.psk.eshop.dto.RefundRequestDTO;
 import com.psk.eshop.model.Refund;
 import com.psk.eshop.repository.RefundRepository;
+import jakarta.persistence.OptimisticLockException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,11 @@ public class RefundServiceImpl implements RefundService{
                     refund.setCreatedDate(refundRequest.getCreatedDate());
                     refund.setUserEmail(refundRequest.getUserEmail());
                     refund.setOrder(orderService.getOrderById(refundRequest.getOrderId()));
-                    return refundRepository.save(refund);
+                    try {
+                        return refundRepository.save(refund);
+                    } catch (OptimisticLockException ex) {
+                        throw new ResponseStatusException(HttpStatus.CONFLICT, "Entity was updated by another user. Try again");
+                    }
                 })
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Refund with id %d not found", refundId))

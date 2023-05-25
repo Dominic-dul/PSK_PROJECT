@@ -1,13 +1,11 @@
 package com.psk.eshop.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.psk.eshop.enums.PaymentType;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -26,4 +24,6 @@ public class Invoice {
     private PaymentType paymentType;
     private BigDecimal amount;
     private String notes;
+    @Version
+    private Long version;
 }

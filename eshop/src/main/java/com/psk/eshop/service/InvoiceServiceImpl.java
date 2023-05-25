@@ -3,6 +3,7 @@ package com.psk.eshop.service;
 import com.psk.eshop.dto.InvoiceRequestDTO;
 import com.psk.eshop.model.Invoice;
 import com.psk.eshop.repository.InvoiceRepository;
+import jakarta.persistence.OptimisticLockException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,11 @@ public class InvoiceServiceImpl implements InvoiceService{
                     invoice.setPaymentType(invoiceRequest.getPaymentType());
                     invoice.setNotes(invoiceRequest.getNotes());
                     invoice.setAmount(invoiceRequest.getAmount());
-                    return invoiceRepository.save(invoice);
+                    try {
+                        return invoiceRepository.save(invoice);
+                    } catch (OptimisticLockException ex) {
+                        throw new ResponseStatusException(HttpStatus.CONFLICT, "Entity was updated by another user. Try again");
+                    }
                 })
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Invoice with id %d not found", invoiceId))
