@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,4 +32,5 @@ public class Product {
     private String description;
     private String picturePath;
     private Long quantity;
+    private Timestamp dateReceived;
 }

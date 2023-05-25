@@ -4,12 +4,13 @@ import com.psk.eshop.dto.PaymentRequestDTO;
 import com.psk.eshop.model.Payment;
 import com.psk.eshop.repository.PaymentRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-
+@Primary
 @Service
 @AllArgsConstructor
 public class PaymentServiceImpl implements PaymentService{
