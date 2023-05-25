@@ -1,1 +1,19 @@
 
+2023-05-25 20:04:54.140 [http-nio-9999-exec-2] INFO  c.p.e.i.LoggingInterceptor - Method 'GET' called for path '/e-shop/orders'
+2023-05-25 20:04:54.266 [http-nio-9999-exec-2] INFO  c.p.e.i.LoggingInterceptor - Response status: 200
+2023-05-25 20:04:54.266 [http-nio-9999-exec-2] INFO  c.p.e.i.LoggingInterceptor - Request completed for path: /e-shop/orders
+2023-05-25 20:05:02.659 [http-nio-9999-exec-4] INFO  c.p.e.i.LoggingInterceptor - Method 'GET' called for path '/e-shop/invoices'
+2023-05-25 20:05:02.673 [http-nio-9999-exec-4] INFO  c.p.e.i.LoggingInterceptor - Response status: 200
+2023-05-25 20:05:02.676 [http-nio-9999-exec-4] INFO  c.p.e.i.LoggingInterceptor - Request completed for path: /e-shop/invoices
+2023-05-25 20:05:14.008 [http-nio-9999-exec-5] INFO  c.p.e.i.LoggingInterceptor - Method 'GET' called for path '/e-shop/products'
+2023-05-25 20:05:14.066 [http-nio-9999-exec-5] INFO  c.p.e.i.LoggingInterceptor - Response status: 200
+2023-05-25 20:05:14.068 [http-nio-9999-exec-5] INFO  c.p.e.i.LoggingInterceptor - Request completed for path: /e-shop/products
+2023-05-25 20:05:36.199 [http-nio-9999-exec-8] INFO  c.p.e.i.LoggingInterceptor - Method 'GET' called for path '/e-shop/product/1'
+2023-05-25 20:05:36.258 [http-nio-9999-exec-8] INFO  c.p.e.i.LoggingInterceptor - Response status: 200
+2023-05-25 20:05:36.258 [http-nio-9999-exec-8] INFO  c.p.e.i.LoggingInterceptor - Request completed for path: /e-shop/product/1
+2023-05-25 20:11:26.887 [http-nio-9999-exec-4] INFO  c.p.e.i.LoggingInterceptor - Method 'GET' called for path '/e-shop/products'
+2023-05-25 20:11:27.006 [http-nio-9999-exec-4] INFO  c.p.e.i.LoggingInterceptor - Response status: 200
+2023-05-25 20:11:27.007 [http-nio-9999-exec-4] INFO  c.p.e.i.LoggingInterceptor - Request completed for path: /e-shop/products
+2023-05-25 20:11:34.488 [http-nio-9999-exec-8] INFO  c.p.e.i.LoggingInterceptor - Method 'GET' called for path '/e-shop/product/1'
+2023-05-25 20:11:34.512 [http-nio-9999-exec-8] INFO  c.p.e.i.LoggingInterceptor - Response status: 200
+2023-05-25 20:11:34.513 [http-nio-9999-exec-8] INFO  c.p.e.i.LoggingInterceptor - Request completed for path: /e-shop/product/1

@@ -16,7 +16,6 @@ public class EshopApplication {
 
 	@Configuration
 	public static class InterceptorConfig implements WebMvcConfigurer {
-
 		@Override
 		public void addInterceptors(InterceptorRegistry registry) {
 			registry.addInterceptor(new LoggingInterceptor())

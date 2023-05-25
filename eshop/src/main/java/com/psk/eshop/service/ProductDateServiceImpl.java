@@ -8,20 +8,25 @@ import com.psk.eshop.model.Order;
 import com.psk.eshop.model.Product;
 import com.psk.eshop.repository.ProductRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
 @AllArgsConstructor
-public class ProductServiceImpl implements ProductService{
+public class ProductDateServiceImpl implements ProductService{
+    private ProductService productService;
     private ProductRepository productRepository;
+
     @Override
     public Product createProduct(ProductRequestDTO productRequest, MultipartFile file) {
         var newProduct = Product.builder()
@@ -42,9 +47,9 @@ public class ProductServiceImpl implements ProductService{
     }
     @Override
     public Product getProductById(Long productId) {
-        return productRepository.findById(productId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Product with id %d not found", productId))
-        );
+        Product product = productService.getProductById(productId);
+        product.setDateReceived(Timestamp.from(Instant.now()));
+        return product;
     }
     @Override
     public Product updateProduct(Long productId, ProductRequestDTO productRequest, MultipartFile file) {
