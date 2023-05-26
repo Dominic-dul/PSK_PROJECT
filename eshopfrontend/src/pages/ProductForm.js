@@ -7,6 +7,7 @@ const ProductForm = () => {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [discountId, setDiscountId] = useState("");
   const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [file, setFile] = useState(null);
@@ -19,7 +20,7 @@ const ProductForm = () => {
     setShowSuccess(false);
     setShowError(false);
 
-    if(!user || !discountId || !price || !name || !description || !file) {
+    if(!discountId || !price || !name || !description || !file) {
       setShowError(true);
       setErrorMessage("All fields are required");
       return;
@@ -32,6 +33,7 @@ const ProductForm = () => {
       price: Number(price),
       name,
       description,
+      quantity,
     }));
     formData.append('file', file);
 
@@ -88,6 +90,11 @@ const ProductForm = () => {
       <Form.Group className="mb-3">
         <Form.Label>Description</Form.Label>
         <Form.Control as="textarea" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} />
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label>Quantity</Form.Label>
+        <Form.Control type="number" placeholder="Quantity" value={quantity} onChange={e => setQuantity(e.target.value)} />
       </Form.Group>
 
       <Form.Group className="mb-3">

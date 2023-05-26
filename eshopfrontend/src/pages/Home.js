@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ProductList from '../components/ProductList';
 import api from "./../utils/api";
 import { useAuth0 } from '@auth0/auth0-react';
+import Hero from '../components/Hero';
 
 
 const Home = () => {
@@ -81,7 +82,7 @@ const Home = () => {
   return (
     <div>
       <main>
-        <h1>Welcome to Flower Eshop!</h1>
+        <Hero></Hero>
         {products.map((product) => (
           <ProductList
             key={product.id}
