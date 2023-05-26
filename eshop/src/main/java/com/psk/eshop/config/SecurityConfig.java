@@ -3,6 +3,7 @@ package com.psk.eshop.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
@@ -36,8 +37,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .requestMatchers("/e-shop/products").permitAll()
-                .requestMatchers("/e-shop/**").authenticated()
+//                .requestMatchers("/e-shop/products").permitAll()
+//                .requestMatchers("/e-shop/**").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/e-shop/**").permitAll()
                 .and().cors()
                 .and().oauth2ResourceServer().jwt();
         return http.build();
