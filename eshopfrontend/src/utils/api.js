@@ -95,6 +95,14 @@ function postPayment(token, paymentDetails) {
     });
 }
 
+function putProduct(formData,id,token){
+  return axios.put(`${API_URL}/product/${id}`, formData, {
+    headers: {
+        Authorization: `Bearer ${token}`,
+      },
+  })
+}
+
 const api = {
     getProducts,
     postOrder,
@@ -102,6 +110,7 @@ const api = {
     getOrderById,
     getOrdersFilter,
     postPayment,
+    putProduct,
   };
   
   export default api;

@@ -10,8 +10,11 @@ import './styles/App.css';
 import ProductForm from './pages/ProductForm';
 import Faq from './pages/Faq';
 import Checkout from './pages/Checkout';
+import { useAuth0 } from '@auth0/auth0-react';
+
 
 function App() {
+  const { isAuthenticated } = useAuth0();
   return (
     <Router>
       <div className="App">
@@ -19,12 +22,16 @@ function App() {
         <div className="MainContent">
           <Routes>
             <Route exact path="/" element={<Home/>} />
-            <Route path="/cart" element={<Cart/>} />
-            <Route exact path="/add-product" element={<ProductForm/>} />
             <Route exact path="/about" element={<About />} />
             <Route exact path="/faq" element={<Faq />} />
             <Route exact path="/contacts" element={<Contacts />} />
-            <Route exact path="/checkout" element={<Checkout />} />
+            {isAuthenticated && (
+              <>
+                <Route exact path="/checkout" element={<Checkout />} />
+                <Route exact path="/add-product" element={<ProductForm/>} />
+                <Route path="/cart" element={<Cart/>} />
+              </>
+            )}
           </Routes>
         </div>
       </div>

@@ -40,10 +40,14 @@ function Header() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link as={Link} to="/about">About</Nav.Link>
-          <Nav.Link as={Link} to="/add-product">Add Product</Nav.Link>
           <Nav.Link as={Link} to="/faq">FAQ</Nav.Link>
           <Nav.Link as={Link} to="/contacts">Contacts</Nav.Link>
-          <Nav.Link as={Link} to="/cart">Cart</Nav.Link>
+          {isAuthenticated && (
+            <>
+              <Nav.Link as={Link} to="/add-product">Add Product</Nav.Link>
+              <Nav.Link as={Link} to="/cart">Cart</Nav.Link>
+            </>
+          )}
         </Nav>
       </Navbar.Collapse>
       <Navbar.Collapse className="justify-content-end">

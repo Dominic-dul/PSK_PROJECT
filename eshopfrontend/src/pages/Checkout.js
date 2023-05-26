@@ -18,6 +18,7 @@ const Checkout = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
   const [productIds, setProductIds] = useState([]);
+  const [order, setOrder] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,6 +43,7 @@ const Checkout = () => {
     console.log(paymentDetails)
     api.postPayment(token,paymentDetails).then((data) => {
       console.log(data)
+      //process order to in progress
       const orderData = {
           "productIds": productIds,
           "userEmail": user.email,
@@ -50,6 +52,39 @@ const Checkout = () => {
       }
       api.putOrder(orderData, orderId, token).then((data) => {
         console.log(data)
+      });
+      // process product quantity
+      // map through all products and update quantity
+      // Filter out duplicate products based on id
+      console.log("Order is:",order)
+      let formData = new FormData();
+      var uniqueProducts = {};
+      order.products.forEach((product) => {
+        if (uniqueProducts.hasOwnProperty(product.id)) {
+          uniqueProducts[product.id].count++;
+        } else {
+          uniqueProducts[product.id] = {
+            ...product,
+            count: 1
+          };
+        }
+      });
+      
+      const uniqueProductArray = Object.values(uniqueProducts);
+      uniqueProductArray.forEach((product) => {
+        formData.append('productRequest', JSON.stringify({
+          userEmail: String(product.userEmail),
+          discountId: Number(product.discountId),
+          price: Number(orderPrice),
+          name: String(product.name),
+          description: String(product.description),
+          quantity: Number(product.quantity - product.count),
+        }));
+      formData.append('file', String(product.picturePath));
+      console.log("Product in cart:",formData)
+      api.putProduct(formData,product.id, token).then((data) => {
+        console.log(data)
+      });
       });
 
     });
@@ -77,6 +112,7 @@ const Checkout = () => {
           }));
           setOrderPrice(data[0].price);
           setOrderId(data[0].id)
+          setOrder(data[0])
         }
 
       });

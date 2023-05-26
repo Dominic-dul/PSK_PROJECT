@@ -86,10 +86,13 @@ const Cart = (orderId) => {
           </tbody>
         </Table>
       )}
-      <Link to="/checkout" >
-        <Button variant="primary">Proceed to Checkout</Button>
-      </Link>
-      
+        {cartItems.length === 0 ? (
+          <p></p>
+        ) : (
+          <Link to="/checkout" >
+            <Button variant="primary">Proceed to Checkout</Button>
+          </Link>
+        )}
     </div>
   );
 }

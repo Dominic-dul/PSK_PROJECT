@@ -18,7 +18,7 @@ const Home = () => {
         productIds: [product.id],
         orderStatus: 'PLACED',
         userEmail: user.email,
-        shippingAddress: 'Lietuva, Vilnius, Gedimino pr. 1'
+        shippingAddress: ''
       };
       console.log(orderData)
       api.postOrder(orderData,token).then((data) => {
@@ -26,19 +26,24 @@ const Home = () => {
       });
     }
     else {
-      var productIds = order[0].products.map(function(product) {
-        return product.id;
-      });
-      productIds.push(product.id)
-      const orderData = {
-        productIds: productIds,
-        orderStatus: 'PLACED',
-        userEmail: user.email,
+      // take out quantity from order[0].products where product.id = product.id
+      const currentQuantity = order[0].products.filter((item) => item.id == product.id).length
+      if(product.quantity > currentQuantity ){
+        var productIds = order[0].products.map(function(product) {
+          return product.id;
+        });
+        productIds.push(product.id)
+        const orderData = {
+          productIds: productIds,
+          orderStatus: 'PLACED',
+          userEmail: user.email,
+        }
+        console.log(orderData)
+        api.putOrder(orderData,order[0].id,token).then((data) => {
+          setOrder([data]);
+        });
       }
-      console.log(orderData)
-      api.putOrder(orderData,order[0].id,token).then((data) => {
-        setOrder([data]);
-      });
+
     }
   };
 
