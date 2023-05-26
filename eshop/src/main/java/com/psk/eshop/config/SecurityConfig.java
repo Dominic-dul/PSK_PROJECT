@@ -39,7 +39,6 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .requestMatchers("/e-shop/products").permitAll()
                 .requestMatchers("/e-shop/**").authenticated()
-//                .requestMatchers(HttpMethod.PUT, "/e-shop/**").permitAll()
                 .and().cors()
                 .and().oauth2ResourceServer().jwt();
         return http.build();
