@@ -37,9 +37,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-//                .requestMatchers("/e-shop/products").permitAll()
-//                .requestMatchers("/e-shop/**").authenticated()
-                .requestMatchers(HttpMethod.PUT, "/e-shop/**").permitAll()
+                .requestMatchers("/e-shop/products").permitAll()
+                .requestMatchers("/e-shop/**").authenticated()
+//                .requestMatchers(HttpMethod.PUT, "/e-shop/**").permitAll()
                 .and().cors()
                 .and().oauth2ResourceServer().jwt();
         return http.build();
