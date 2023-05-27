@@ -48,5 +48,5 @@ public class Order {
                     name = "product_id", referencedColumnName = "id"
             )
     )
-    private Set<Product> products = new HashSet<>();
+    private List<Product> products = new ArrayList<>();
 }
