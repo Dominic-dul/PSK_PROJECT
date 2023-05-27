@@ -7,7 +7,9 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -46,5 +48,5 @@ public class Order {
                     name = "product_id", referencedColumnName = "id"
             )
     )
-    private List<Product> products = new ArrayList<>();
+    private Set<Product> products = new HashSet<>();
 }
