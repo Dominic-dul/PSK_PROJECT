@@ -4,12 +4,14 @@ import com.psk.eshop.dto.OrderFilterDTO;
 import com.psk.eshop.dto.OrderRequestDTO;
 import com.psk.eshop.interceptors.Loggable;
 import com.psk.eshop.model.Order;
+import com.psk.eshop.enums.OrderStatus;
 import com.psk.eshop.model.Product;
 import com.psk.eshop.repository.OrderRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
@@ -52,16 +54,28 @@ public class OrderServiceImpl implements OrderService{
     @Override
     @Loggable
     public Order updateOrder(Long orderId, OrderRequestDTO orderRequest) {
-        List<Product> products = orderRequest.getProductIds().stream()
-                .map(id -> productService.getProductById(id))
-                .collect(Collectors.toList());
+        List<Long> productIds = orderRequest.getProductIds();
+        String email = orderRequest.getUserEmail();
+        OrderStatus orderStatus = orderRequest.getOrderStatus();
+        String shippingAddress = orderRequest.getShippingAddress();
         return orderRepository.findById(orderId)
                 .map(order -> {
-                    order.setProducts(products);
-                    order.setUserEmail(orderRequest.getUserEmail());
-                    order.setOrderStatus(orderRequest.getOrderStatus());
-                    order.setPrice(products.stream().map(Product::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add));
-                    order.setShippingAddress(orderRequest.getShippingAddress());
+                    if (!CollectionUtils.isEmpty(productIds)){
+                        List<Product> products = productIds.stream()
+                                .map(id -> productService.getProductById(id))
+                                .toList();
+                        order.setProducts(products);
+                        order.setPrice(products.stream().map(Product::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add));
+                    }
+                    if (email != null) {
+                        order.setUserEmail(email);
+                    }
+                    if (orderStatus != null) {
+                        order.setOrderStatus(orderStatus);
+                    }
+                    if (shippingAddress != null){
+                        order.setShippingAddress(shippingAddress);
+                    }
                     return orderRepository.save(order);
                 })
                 .orElseThrow(

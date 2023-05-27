@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,15 +54,35 @@ public class ProductServiceImpl implements ProductService{
     @Override
     @Loggable
     public Product updateProduct(Long productId, ProductRequestDTO productRequest, MultipartFile file) {
+        String email = productRequest.getUserEmail();
+        Long discountId = productRequest.getDiscountId();
+        BigDecimal price = productRequest.getPrice();
+        String name = productRequest.getName();
+        String description = productRequest.getDescription();
+        Long quantity = productRequest.getQuantity();
         return productRepository.findById(productId)
                 .map(product -> {
-                    product.setUserEmail(productRequest.getUserEmail());
-                    product.setDiscountId(productRequest.getDiscountId());
-                    product.setPrice(productRequest.getPrice());
-                    product.setName(productRequest.getName());
-                    product.setDescription(productRequest.getDescription());
-                    product.setPicturePath(getCloudinaryPicture(file));
-                    product.setQuantity(productRequest.getQuantity());
+                    if (email != null){
+                        product.setUserEmail(email);
+                    }
+                    if (discountId != null){
+                        product.setDiscountId(discountId);
+                    }
+                    if (price != null){
+                        product.setPrice(price);
+                    }
+                    if (name != null){
+                        product.setName(name);
+                    }
+                    if(description != null){
+                        product.setDescription(description);
+                    }
+                    if (file.isEmpty()){
+                        product.setPicturePath(getCloudinaryPicture(file));
+                    }
+                    if (quantity != null){
+                        product.setQuantity(quantity);
+                    }
                     return productRepository.save(product);
                 })
                 .orElseThrow(
