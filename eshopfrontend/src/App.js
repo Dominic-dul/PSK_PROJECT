@@ -9,22 +9,34 @@ import Header from './components/Header';
 import './styles/App.css';
 import ProductForm from './pages/ProductForm';
 import Faq from './pages/Faq';
+import OrdersPage from './pages/OrdersPage';
+import { useAuth0 } from '@auth0/auth0-react';
+import Checkout from './pages/Checkout'
+import { Container } from 'react-bootstrap';
 
 function App() {
+  const { isAuthenticated } = useAuth0();
   return (
     <Router>
       <div className="App">
         <Header />
-        <div className="MainContent">
+          <Container>
           <Routes>
             <Route exact path="/" element={<Home/>} />
-            <Route path="/cart" element={<Cart/>} />
-            <Route exact path="/add-product" element={<ProductForm/>} />
             <Route exact path="/about" element={<About />} />
             <Route exact path="/faq" element={<Faq />} />
             <Route exact path="/contacts" element={<Contacts />} />
+            
+            {isAuthenticated && (
+              <>
+                <Route exact path="/checkout" element={<Checkout />} />
+                <Route exact path="/add-product" element={<ProductForm/>} />
+                <Route path="/cart" element={<Cart/>} />
+                <Route exact path="/orders" element={<OrdersPage />} />
+              </>
+            )}
           </Routes>
-        </div>
+          </Container>
       </div>
     </Router>
   );

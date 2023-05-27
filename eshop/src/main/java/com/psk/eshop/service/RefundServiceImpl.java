@@ -1,6 +1,7 @@
 package com.psk.eshop.service;
 
 import com.psk.eshop.dto.RefundRequestDTO;
+import com.psk.eshop.interceptors.Loggable;
 import com.psk.eshop.model.Refund;
 import com.psk.eshop.repository.RefundRepository;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ public class RefundServiceImpl implements RefundService{
     private final RefundRepository refundRepository;
     private final OrderService orderService;
     @Override
+    @Loggable
     public Refund createRefund(RefundRequestDTO refundRequest) {
         var newRefund = Refund.builder()
                 .order(orderService.getOrderById(refundRequest.getOrderId()))
@@ -28,11 +30,13 @@ public class RefundServiceImpl implements RefundService{
     }
 
     @Override
+    @Loggable
     public List<Refund> getRefunds() {
         return refundRepository.findAll();
     }
 
     @Override
+    @Loggable
     public Refund updateRefund(Long refundId, RefundRequestDTO refundRequest) {
         return refundRepository.findById(refundId)
                 .map(refund -> {
@@ -48,12 +52,14 @@ public class RefundServiceImpl implements RefundService{
                 );
     }
     @Override
+    @Loggable
     public void deleteRefundById(Long refundId)
     {
         refundRepository.deleteById(refundId);
     }
 
     @Override
+    @Loggable
     public Refund getRefundById(Long refundId) {
         return refundRepository.findById(refundId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Refund with id %d not found", refundId))

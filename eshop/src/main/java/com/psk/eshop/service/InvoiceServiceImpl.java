@@ -1,6 +1,7 @@
 package com.psk.eshop.service;
 
 import com.psk.eshop.dto.InvoiceRequestDTO;
+import com.psk.eshop.interceptors.Loggable;
 import com.psk.eshop.model.Invoice;
 import com.psk.eshop.repository.InvoiceRepository;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ public class InvoiceServiceImpl implements InvoiceService{
     private final OrderService orderService;
 
     @Override
+    @Loggable
     public Invoice getInvoiceById(Long invoiceId) {
         return invoiceRepository.findById(invoiceId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Invoice with id %d not found", invoiceId))
@@ -24,6 +26,7 @@ public class InvoiceServiceImpl implements InvoiceService{
     }
 
     @Override
+    @Loggable
     public Invoice createInvoice(InvoiceRequestDTO invoiceRequest) {
         var newInvoice = Invoice.builder()
                 .order(orderService.getOrderById(invoiceRequest.getOrderId()))
@@ -36,6 +39,7 @@ public class InvoiceServiceImpl implements InvoiceService{
     }
 
     @Override
+    @Loggable
     public Invoice updateInvoice(Long invoiceId, InvoiceRequestDTO invoiceRequest) {
         return invoiceRepository.findById(invoiceId)
                 .map(invoice -> {
@@ -51,12 +55,14 @@ public class InvoiceServiceImpl implements InvoiceService{
                 );
     }
     @Override
+    @Loggable
     public void deleteInvoiceById(Long invoiceId)
     {
         invoiceRepository.deleteById(invoiceId);
     }
 
     @Override
+    @Loggable
     public List<Invoice> getInvoices() {
         return invoiceRepository.findAll();
     }

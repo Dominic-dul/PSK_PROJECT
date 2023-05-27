@@ -1,6 +1,7 @@
 package com.psk.eshop.service;
 
 import com.psk.eshop.dto.StatisticRequestDTO;
+import com.psk.eshop.interceptors.Loggable;
 import com.psk.eshop.model.Statistic;
 import com.psk.eshop.repository.StatisticRepository;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.List;
 public class StatisticServiceImpl implements StatisticService{
     private final StatisticRepository statisticRepository;
     @Override
+    @Loggable
     public Statistic createStatistic(StatisticRequestDTO statisticRequest) {
         var newStatistic = Statistic.builder()
                 .orderId(statisticRequest.getOrderId())
@@ -25,6 +27,7 @@ public class StatisticServiceImpl implements StatisticService{
     }
 
     @Override
+    @Loggable
     public Statistic updateStatistic(Long statisticId, StatisticRequestDTO statisticRequest) {
         return statisticRepository.findById(statisticId)
                 .map(statistic -> {
@@ -38,12 +41,14 @@ public class StatisticServiceImpl implements StatisticService{
                 );
     }
     @Override
+    @Loggable
     public void deleteStatisticById(Long statisticId)
     {
         statisticRepository.deleteById(statisticId);
     }
 
     @Override
+    @Loggable
     public Statistic getStatisticById(Long statisticId) {
         return statisticRepository.findById(statisticId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Statistic with id %d not found", statisticId))
@@ -51,6 +56,7 @@ public class StatisticServiceImpl implements StatisticService{
     }
 
     @Override
+    @Loggable
     public List<Statistic> getStatistics() {
         return statisticRepository.findAll();
     }
