@@ -32,6 +32,7 @@ const Home = () => {
     else {
       // take out quantity from order[0].products where product.id = product.id
       const currentQuantity = order[0].products.filter((item) => item.id == product.id).length
+      console.log("quantities cu prod:", currentQuantity, product.quantity)
       if(product.quantity > currentQuantity ){
         var productIds = order[0].products.map(function(product) {
           return product.id;
@@ -41,9 +42,11 @@ const Home = () => {
           productIds: productIds,
           orderStatus: 'PLACED',
           userEmail: user.email,
+          shippingAddress: ''
         }
-        console.log(orderData)
+        console.log("what is given:",orderData)
         api.putOrder(orderData,order[0].id,token).then((data) => {
+          console.log("what is outputted:",data)
           setOrder([data]);
         });
       }

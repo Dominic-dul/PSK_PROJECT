@@ -63,7 +63,7 @@ public class OrderServiceImpl implements OrderService{
                     if (!CollectionUtils.isEmpty(productIds)){
                         List<Product> products = productIds.stream()
                                 .map(id -> productService.getProductById(id))
-                                .toList();
+                                .collect(Collectors.toList());
                         order.setProducts(products);
                         order.setPrice(products.stream().map(Product::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add));
                     }

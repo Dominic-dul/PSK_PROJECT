@@ -20,7 +20,7 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping(value = "/product")
-    public Product add(@RequestParam String productRequest, @RequestParam MultipartFile file) throws JsonProcessingException {
+    public Product add(@RequestParam String productRequest, @RequestParam(required = false) MultipartFile file) throws JsonProcessingException {
         ProductRequestDTO product = new ObjectMapper().readValue(productRequest, ProductRequestDTO.class);
         return productService.createProduct(product, file);
     }

@@ -33,7 +33,7 @@ const ProductForm = () => {
       price: Number(price),
       name,
       description,
-      quantity,
+      quantity: Number(quantity),
     }));
     formData.append('file', file);
 
