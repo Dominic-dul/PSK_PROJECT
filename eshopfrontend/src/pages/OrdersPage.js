@@ -34,10 +34,7 @@ const OrdersPage = () => {
       const token = await getAccessTokenSilently(); // Retrieve the token inside the function
 
       const orderData = {
-        productIds: productIds,
-        userEmail: userEmail,
         orderStatus: 'ACCEPTED',
-        shippingAddress: shippingAddress,
       };
 
       // Make the PUT request to update the order
@@ -61,17 +58,14 @@ const OrdersPage = () => {
     }
   };
 
-  const handleRejectOrder = async (orderId, userEmail, shippingAddress, productIds) => {
+  const handleRejectOrder = async (orderId, userEmail, order, productIds) => {
     try {
       const token = await getAccessTokenSilently(); // Retrieve the token inside the function
-
+  
       const orderData = {
-        productIds: productIds,
-        userEmail: userEmail,
         orderStatus: 'REJECTED',
-        shippingAddress: shippingAddress,
       };
-
+  
       // Make the PUT request to update the order
       const response = await fetch(`http://localhost:9999/e-shop/order/${orderId}`, {
         method: 'PUT',
@@ -81,17 +75,60 @@ const OrdersPage = () => {
         },
         body: JSON.stringify(orderData),
       });
-
+  
       if (response.ok) {
+        // Update the quantities of the rejected products
+        const uniqueProducts = {};
+        order.products.forEach((product) => {
+          if (uniqueProducts.hasOwnProperty(product.id)) {
+            uniqueProducts[product.id].count++;
+          } else {
+            uniqueProducts[product.id] = {
+              ...product,
+              count: 1,
+            };
+          }
+        });
+  
+        const uniqueProductArray = Object.values(uniqueProducts);
+        const updateQuantities = uniqueProductArray.map(async (product) => {
+          const formData = new FormData();
+          formData.append('productRequest', JSON.stringify({
+            userEmail: String(product.userEmail),
+            discountId: Number(product.discountId),
+            price: Number(order.price),
+            name: String(product.name),
+            description: String(product.description),
+            quantity: Number(product.quantity + product.count),
+          }));
+          
+          const updateResponse = await fetch(`http://localhost:9999/e-shop/product/${product.id}`, {
+            method: 'PUT',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+          });
+  
+          if (!updateResponse.ok) {
+            console.error('Error updating product quantity:', updateResponse.status);
+          }
+        });
+  
+        // Wait for all product quantity updates to complete
+        await Promise.all(updateQuantities);
+  
         // Refresh orders after successful update
         fetchOrders();
       } else {
-        console.error('Error accepting order:', response.status);
+        console.error('Error rejecting order:', response.status);
       }
     } catch (error) {
-      console.error('Error accepting order:', error);
+      console.error('Error rejecting order:', error);
     }
   };
+  
+  
 
   return (
     <div>
@@ -148,7 +185,7 @@ const OrdersPage = () => {
                   handleRejectOrder(
                     order.id,
                     order.userEmail,
-                    order.shippingAdress,
+                    order,
                     order.products.map((product) => product.id)
                   )
                 }>Reject</Button>
