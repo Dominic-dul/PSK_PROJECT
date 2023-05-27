@@ -12,6 +12,7 @@ import Faq from './pages/Faq';
 import OrdersPage from './pages/OrdersPage';
 import { useAuth0 } from '@auth0/auth0-react';
 import Checkout from './pages/Checkout'
+import { Container } from 'react-bootstrap';
 
 function App() {
   const { isAuthenticated } = useAuth0();
@@ -19,7 +20,7 @@ function App() {
     <Router>
       <div className="App">
         <Header />
-        <div className="MainContent">
+          <Container>
           <Routes>
             <Route exact path="/" element={<Home/>} />
             <Route exact path="/about" element={<About />} />
@@ -35,7 +36,7 @@ function App() {
               </>
             )}
           </Routes>
-        </div>
+          </Container>
       </div>
     </Router>
   );
