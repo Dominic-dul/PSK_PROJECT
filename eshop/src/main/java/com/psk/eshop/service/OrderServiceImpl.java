@@ -27,9 +27,9 @@ public class OrderServiceImpl implements OrderService{
     @Override
     @Loggable
     public Order createOrder(OrderRequestDTO orderRequest) {
-        List<Product> products = orderRequest.getProductIds().stream()
+        Set<Product> products = orderRequest.getProductIds().stream()
                 .map(id -> productService.getProductById(id))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
         var newOrder = Order.builder()
                 .products(products)
                 .userEmail(orderRequest.getUserEmail())
@@ -62,9 +62,9 @@ public class OrderServiceImpl implements OrderService{
         return orderRepository.findById(orderId)
                 .map(order -> {
                     if (!CollectionUtils.isEmpty(productIds)){
-                        List<Product> products = productIds.stream()
+                        Set<Product> products = productIds.stream()
                                 .map(id -> productService.getProductById(id))
-                                .collect(Collectors.toList());
+                                .collect(Collectors.toSet());
                         order.setProducts(products);
                         order.setPrice(products.stream().map(Product::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add));
                     }
