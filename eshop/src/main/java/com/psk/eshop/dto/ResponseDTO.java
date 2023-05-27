@@ -1,5 +1,9 @@
 package com.psk.eshop.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class ResponseDTO {
 
     private String message;
