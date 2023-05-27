@@ -9,10 +9,3 @@
 .Home{
     margin-top: 80vh; /* Change this value to match the height of your Header component */
 }
-.MainContent {
-    flex: 1;
-    /* padding: 20px; */
-    margin-left: 30vh;
-    margin-right: 30vh;
-    margin-top: 10vh;
-  }

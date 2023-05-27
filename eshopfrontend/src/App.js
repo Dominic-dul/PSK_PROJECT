@@ -11,13 +11,14 @@ import ProductForm from './pages/ProductForm';
 import Faq from './pages/Faq';
 import OrdersPage from './pages/OrdersPage';
 import Checkout from './pages/Checkout'
+import { Container } from 'react-bootstrap';
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Header />
-        <div className="MainContent">
+          <Container>
           <Routes>
             <Route exact path="/" element={<Home/>} />
             <Route path="/cart" element={<Cart/>} />
@@ -28,7 +29,7 @@ function App() {
             <Route exact path="/orders" element={<OrdersPage />} />
             <Route exact path="/checkout" element={<Checkout />} />
           </Routes>
-        </div>
+          </Container>
       </div>
     </Router>
   );

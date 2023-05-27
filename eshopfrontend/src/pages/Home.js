@@ -5,6 +5,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import Hero from '../components/Hero';
 
 
+
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
