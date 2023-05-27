@@ -3,6 +3,8 @@ import ProductList from '../components/ProductList';
 import api from "./../utils/api";
 import { useAuth0 } from '@auth0/auth0-react';
 import Hero from '../components/Hero';
+import { Container, Row, Col } from 'react-bootstrap';
+import Footer from '../components/Footer';
 
 
 
@@ -84,7 +86,11 @@ const Home = () => {
     <div>
       <main>
         <Hero></Hero>
+        <Container>
+        <Row>
+
         {products.map((product) => (
+                  <Col md={{ span: 6 }}>
           <ProductList
             key={product.id}
             name={product.name}
@@ -94,8 +100,13 @@ const Home = () => {
             picturePath={product.picturePath}
             addToCart={() => handleAddToCart(product)}
           />
+                </Col>
       ))}
+
+      </Row>
+      </Container>
       </main>
+      <Footer></Footer>
     </div>
   );
 }
