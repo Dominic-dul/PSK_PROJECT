@@ -92,19 +92,20 @@ const Home = () => {
         <Container>
         <Row>
 
-        {products.map((product) => (
-                  <Col md={{ span: 6 }}>
-          <ProductList
-            key={product.id}
-            name={product.name}
-            description={product.description}
-            price={product.price}
-            quantity={product.quantity}
-            picturePath={product.picturePath}
-            addToCart={() => handleAddToCart(product)}
-          />
-                </Col>
-      ))}
+        {products
+  .filter((product) => product.quantity !== null && product.quantity > 0)
+  .map((product) => (
+    <Col md={{ span: 6 }} key={product.id}>
+      <ProductList
+        name={product.name}
+        description={product.description}
+        price={product.price}
+        quantity={product.quantity}
+        picturePath={product.picturePath}
+        addToCart={() => handleAddToCart(product)}
+      />
+    </Col>
+  ))}
 
       </Row>
       </Container>
