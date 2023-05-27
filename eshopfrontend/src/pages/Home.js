@@ -3,6 +3,8 @@ import ProductList from '../components/ProductList';
 import api from "./../utils/api";
 import { useAuth0 } from '@auth0/auth0-react';
 import Hero from '../components/Hero';
+import { Container, Row, Col } from 'react-bootstrap';
+import Footer from '../components/Footer';
 
 
 
@@ -87,23 +89,27 @@ const Home = () => {
     <div>
       <main>
         <Hero></Hero>
-        {products.map((product) => {
-          if (product.quantity > 0 && product.quantity !== null) {
-            return (
-              <ProductList
-                key={product.id}
-                name={product.name}
-                description={product.description}
-                price={product.price}
-                quantity={product.quantity}
-                picturePath={product.picturePath}
-                addToCart={() => handleAddToCart(product)}
-              />
-            );
-          }
-          return null; // Don't render the product if quantity is 0 or null
-        })}
+        <Container>
+        <Row>
+
+        {products.map((product) => (
+                  <Col md={{ span: 6 }}>
+          <ProductList
+            key={product.id}
+            name={product.name}
+            description={product.description}
+            price={product.price}
+            quantity={product.quantity}
+            picturePath={product.picturePath}
+            addToCart={() => handleAddToCart(product)}
+          />
+                </Col>
+      ))}
+
+      </Row>
+      </Container>
       </main>
+      <Footer></Footer>
     </div>
   );
 }
