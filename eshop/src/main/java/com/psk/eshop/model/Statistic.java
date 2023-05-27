@@ -18,7 +18,7 @@ public class Statistic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long orderId; //TODO map with order when created
+    private Long orderId;
     private Timestamp createdDate;
     private String description;
 }

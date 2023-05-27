@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 @Getter
 public class InvoiceRequestDTO {
     private Long orderId;
-    //    private Set<Product> products;
     private Timestamp createdDate;
     private PaymentType paymentType;
     private BigDecimal amount;

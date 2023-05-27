@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/e-shop")
 @CrossOrigin("*")
 @AllArgsConstructor
-public class StatisticController { //TODO create filtering by orderstatus when order is created
+public class StatisticController {
     private final StatisticService statisticService;
     @PostMapping(value = "/statistic")
     public Statistic add(@RequestBody StatisticRequestDTO statisticRequest){
