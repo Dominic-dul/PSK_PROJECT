@@ -5,6 +5,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import Hero from '../components/Hero';
 import { Container, Row, Col } from 'react-bootstrap';
 import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 
 
 
@@ -93,17 +94,19 @@ const Home = () => {
         <Row>
 
         {products
-  .filter((product) => product.quantity !== null && product.quantity > 0)
-  .map((product) => (
-    <Col md={{ span: 6 }} key={product.id}>
-      <ProductList
-        name={product.name}
-        description={product.description}
-        price={product.price}
-        quantity={product.quantity}
-        picturePath={product.picturePath}
-        addToCart={() => handleAddToCart(product)}
-      />
+        .filter((product) => product.quantity !== null && product.quantity > 0)
+        .map((product) => (
+          <Col md={{ span: 6 }} key={product.id}>
+            {/* <Link to={{ pathname: `/singleProduct/${product.id}`, state: { prop: product.id } }}> */}
+              <ProductList
+                name={product.name}
+                description={product.description}
+                price={product.price}
+                quantity={product.quantity}
+                picturePath={product.picturePath}
+                addToCart={() => handleAddToCart(product)}
+              />
+            {/* </Link> */}
     </Col>
   ))}
 

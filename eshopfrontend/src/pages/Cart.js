@@ -28,26 +28,12 @@ const Cart = (orderId) => {
         orderStatus: "PLACED",
       };
       api.getOrdersFilter(token, orderDetails).then((data) => {
-        //   // Filter out duplicate products based on id
-        // const uniqueProducts = {};
-        // data.products.forEach((product) => {
-        //   uniqueProducts[product.id] = product;
-        // });
-        // const uniqueProductArray = Object.values(uniqueProducts);
-        // // Calculate the total price
         console.log(data[0].products)
         setCartItems(data[0].products);
         setOrderPrice(data[0].price);
       });
-      
     }
-
   }, [token]);
-  // useEffect(() => {
-  //   const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
-  //   setTotalPrice(totalPrice);
-  //   console.log(cartItems);
-  // }, [cartItems]);
 
   return (
     <div className="cart-container">

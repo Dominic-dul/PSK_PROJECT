@@ -13,6 +13,8 @@ import OrdersPage from './pages/OrdersPage';
 import { useAuth0 } from '@auth0/auth0-react';
 import Checkout from './pages/Checkout'
 import { Container } from 'react-bootstrap';
+import RecentOrders from './pages/RecentOrders';
+// import SingleProduct from './pages/SingleProduct';
 
 function App() {
   const { isAuthenticated } = useAuth0();
@@ -26,6 +28,7 @@ function App() {
             <Route exact path="/about" element={<About />} />
             <Route exact path="/faq" element={<Faq />} />
             <Route exact path="/contacts" element={<Contacts />} />
+            {/* <Route exact path="/singleProduct/:productId" element={<SingleProduct />} /> */}
             
             {isAuthenticated && (
               <>
@@ -33,6 +36,7 @@ function App() {
                 <Route exact path="/add-product" element={<ProductForm/>} />
                 <Route path="/cart" element={<Cart/>} />
                 <Route exact path="/orders" element={<OrdersPage />} />
+                <Route exact path="/recentOrders" element={<RecentOrders />} />
               </>
             )}
           </Routes>

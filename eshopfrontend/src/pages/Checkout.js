@@ -84,6 +84,7 @@ const Checkout = () => {
       console.log("Product in cart:",formData)
       api.putProduct(formData,product.id, token).then((data) => {
         console.log(data)
+        setOrder([])
       });
       });
 
@@ -91,6 +92,7 @@ const Checkout = () => {
     setShowSuccess(true);
     // Perform submission logic
     console.log("Form submitted");
+    window.location.reload();
   };
   useEffect(() => {
     if (token == null) {
@@ -118,6 +120,11 @@ const Checkout = () => {
       });
     }
   }, [token]);
+
+  useEffect(() => {
+    setOrder(order)
+
+  }, [order]);
 
   return (
     <div className="container">
@@ -158,11 +165,18 @@ const Checkout = () => {
             <option value="PAYPAL">PayPal</option> */}
           </Form.Control>
         </Form.Group>
-        Payment Amount: {orderPrice}
-  
-        <Button variant="primary" type="submit">
-          Place Order
-        </Button>
+        Payment Amount: {orderPrice} €
+        <br />
+          {order.length === 0 ? (
+            <>
+            </>
+          ):
+          (
+            <Button variant="primary" type="submit">
+              Place Order
+            </Button>
+          )}
+
       </Form>
     </div>
   );

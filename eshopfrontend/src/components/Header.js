@@ -33,6 +33,7 @@ function Header() {
           <Nav.Link as={Link} to="/faq">FAQ</Nav.Link>
           <Nav.Link as={Link} to="/contacts">Contacts</Nav.Link>
           {isAuthenticated && <Nav.Link as={Link} to="/cart">Cart</Nav.Link>}
+          {isAuthenticated && user.email != "admin@admin.com" && <Nav.Link as={Link} to="/recentOrders">Recent Orders</Nav.Link>}
           {isAuthenticated && user.email == "admin@admin.com" && <Nav.Link as={Link} to="/orders">Orders</Nav.Link>}
           {isAuthenticated && user.email == "admin@admin.com" && <Nav.Link as={Link} to="/add-product">Add Product</Nav.Link>}
         </Nav>
