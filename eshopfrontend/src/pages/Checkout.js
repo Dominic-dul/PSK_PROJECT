@@ -80,7 +80,7 @@ const Checkout = () => {
           description: String(product.description),
           quantity: Number(product.quantity - product.count),
         }));
-      formData.append('file', String(product.picturePath));
+      // formData.append('file', String(product.picturePath));
       console.log("Product in cart:",formData)
       api.putProduct(formData,product.id, token).then((data) => {
         console.log(data)
