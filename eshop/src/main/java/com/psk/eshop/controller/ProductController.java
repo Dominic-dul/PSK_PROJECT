@@ -20,9 +20,8 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping(value = "/product")
-    public Product add(@RequestParam String productRequest, @RequestParam MultipartFile file) throws JsonProcessingException {
-        ProductRequestDTO product = new ObjectMapper().readValue(productRequest, ProductRequestDTO.class);
-        return productService.createProduct(product, file);
+    public Product add(@RequestBody ProductRequestDTO productRequest, @RequestParam(required = false) MultipartFile file) {
+        return productService.createProduct(productRequest, file);
     }
 
     @GetMapping("/products")
@@ -36,9 +35,8 @@ public class ProductController {
     }
 
     @PutMapping("/product/{productId}")
-    public Product update(@PathVariable Long productId, @RequestParam String productRequest, @RequestParam(required = false) MultipartFile file) throws JsonProcessingException {
-        ProductRequestDTO product = new ObjectMapper().readValue(productRequest, ProductRequestDTO.class);
-        return productService.updateProduct(productId, product, file);
+    public Product update(@PathVariable Long productId, @RequestBody ProductRequestDTO productRequest, @RequestParam(required = false) MultipartFile file) {
+        return productService.updateProduct(productId, productRequest, file);
     }
 
     @DeleteMapping("/product/{productId}")

@@ -11,6 +11,7 @@ import com.psk.eshop.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -77,7 +78,7 @@ public class ProductServiceImpl implements ProductService{
                     if(description != null){
                         product.setDescription(description);
                     }
-                    if (file.isEmpty()){
+                    if (file != null && !file.isEmpty()){
                         product.setPicturePath(getCloudinaryPicture(file));
                     }
                     if (quantity != null){
@@ -120,20 +121,20 @@ public class ProductServiceImpl implements ProductService{
         return false;
     }
 
-    private String getCloudinaryPicture(MultipartFile file){
-        Map config = new HashMap();
-        config.put("cloud_name", "drlkduluz");
-        config.put("api_key", "138657524274591");
-        config.put("api_secret", "ov27viA2NibOXi9eAZHXh05IiSI");
-        Cloudinary cloudinary = new Cloudinary(config);
-
-        try {
-            Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
-//            Map uploadResult = cloudinary.uploader().upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg", ObjectUtils.asMap("public_id", "olympic_flag"));
-            return (String) uploadResult.get("secure_url");
+    private String getCloudinaryPicture(MultipartFile file) {
+        if (file != null && !file.isEmpty()) {
+            Map config = new HashMap();
+            config.put("cloud_name", "drlkduluz");
+            config.put("api_key", "138657524274591");
+            config.put("api_secret", "ov27viA2NibOXi9eAZHXh05IiSI");
+            Cloudinary cloudinary = new Cloudinary(config);
+            try {
+                Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+                return (String) uploadResult.get("secure_url");
+            } catch (IOException e) {
+                return null;
+            }
         }
-        catch (IOException e){
-            return null;
-        }
+        return null;
     }
 }
